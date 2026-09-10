@@ -54,10 +54,16 @@ def generate_report(file_path):
     """Generate a basic data-quality report."""
     rows = load_csv(file_path)
 
+    numeric_columns = ["age", "purchase_amount"]
+
     return {
         "statistics": get_basic_statistics(rows),
         "missing_values": count_missing_values(rows),
-        "duplicate_rows": count_duplicates(rows)
+        "duplicate_rows": count_duplicates(rows),
+        "invalid_numeric_values": find_invalid_numeric_values(
+            rows,
+            numeric_columns
+        )
     }
 
 def find_invalid_numeric_values(rows, columns):
