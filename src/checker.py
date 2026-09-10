@@ -60,6 +60,27 @@ def generate_report(file_path):
         "duplicate_rows": count_duplicates(rows)
     }
 
+def find_invalid_numeric_values(rows, columns):
+    """Find values that cannot be converted to numbers."""
+    invalid_values = {}
+
+    for column in columns:
+        invalid_values[column] = []
+
+        for row_number, row in enumerate(rows, start=2):
+            value = row[column].strip()
+
+            if value:
+                try:
+                    float(value)
+                except ValueError:
+                    invalid_values[column].append({
+                        "row": row_number,
+                        "value": value
+                    })
+
+    return invalid_values
+
 
 if __name__ == "__main__":
     file_path = input("Enter CSV file path: ")
